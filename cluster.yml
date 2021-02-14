@@ -1,0 +1,32 @@
+#- hosts: localhost
+#  vars_files:
+#          - pass.yml
+#  roles:
+#          - role: provisioning_instances
+
+- hosts: master
+  roles:
+          - role: config-k8s-master
+
+- hosts: slaves
+  roles:
+          - role: config-k8s-slave
+
+- hosts: master
+  tasks:
+          - name: Generating Token
+            shell: "kubeadm token  create --print-join-command"
+            register: x
+
+          - name: Saving generated token
+            add_host:
+                  name: "token"
+                  token_variable: "{{ x.stdout }}"
+
+- hosts: slaves
+  vars:
+          tok: "{{ hostvars['token']['token_variable'] }}"
+  tasks:
+          - name: Joining to master node
+            shell: "{{ tok }}"
+

@@ -1,0 +1,55 @@
+---
+# tasks file for config-k8s-slave
+- name: "Creating Kubernetes repo"
+  yum_repository:
+          name: "kube"
+          description: "kubernetes repository"
+          baseurl: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64"
+          enabled: 1
+          gpgcheck: 1
+          repo_gpgcheck: 1
+          gpgkey: "https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
+
+
+- name: "Downloading Kubeadm"
+  package:
+          name: "kubeadm"
+          state: present
+
+- name: "Starting Kubelet"
+  service:
+          name: "kubelet"
+          state: started
+
+- name: "Downloading Docker"
+  package:
+          name: "docker"
+          state: present
+
+- name: "Starting Docker"
+  service:
+          name: "docker"
+          state: started
+
+- name: "Copying drivers file"
+  copy:
+          src: daemon.json
+          dest: /etc/docker/daemon.json
+
+- name: "Restarting Docker"
+  service:
+          name: "docker"
+          state: restarted
+
+- name: "Downloading IProute-tc"
+  package:
+          name: "iproute-tc"
+          state: present
+
+- name: "Uploading IProute file"
+  copy:
+          src: k8s.conf
+          dest: /etc/sysctl.d/k8s.conf
+
+- name: "Starting service"
+  shell: "sysctl --system"

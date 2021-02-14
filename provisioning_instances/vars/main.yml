@@ -1,0 +1,4 @@
+---
+# vars file for provisioning_instances
+key_path: "/root/Aws/master.pem"
+inv_path: "/root/Extra/ip.txt"
