@@ -12,7 +12,7 @@ This role will first setup the **Kubernetes repo** in the machine and then downl
 This role will configure two slave nodes same as the master node but the difference is that it will not initialize the kubeadm.
 
 ### cluster.yml:-
-This is the main file it will first launch the instances in the AWS, configure those nodes and at last it will generate the token from the **master node** and paste in the **slave nodes**.
+This is the main file it will first launch the instances in the AWS, configure those nodes and at last it will generate the token from the **master node** and paste in the **slave nodes**. But before running this file make sure to enter you IP address in **ip.txt**.
 
 Just create one file by the name **pass.yml** with the help of **ansible vault** (How to use ansible vault you can check [here](https://docs.ansible.com/ansible/latest/user_guide/vault.html)) and you are good to go.
 
