@@ -1,4 +1,4 @@
 [localhost]
-<your_ip_address> ansible_user=root ansible_ssh_pass=98779877 ansible_connection=ssh ansible_python_interpreter=/usr/bin/python3
+<your_ip_address> ansible_user=root ansible_ssh_pass=<root_password> ansible_connection=ssh ansible_python_interpreter=/usr/bin/python3
 
 
